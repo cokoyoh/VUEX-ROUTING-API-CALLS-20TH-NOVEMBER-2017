@@ -1,9 +1,16 @@
 <template>
     <div class = "source-selection" id = "source-selection">
-        <h4>Source News Source</h4>
-        <select @chnaged="sourceChanged">
-            <option v-bind:value = "source.id" v-for="source in sources">{{source.name}}</option>
-        </select>
+        <div class="panel">
+            <h2>News List</h2>
+            <h4>Source News Source</h4>
+            <select v-on:change="sourceChanged" class="form-control">
+                <option v-bind:value="source.id" v-for="source in sources">{{source.name}}</option>
+            </select>
+            <div  v-if="source">
+                <h6>{{source.description}}</h6>
+                <a v-bind:href = "source.url" target="_blank" class="button primary">Go to {{source.name}} website</a>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -18,9 +25,10 @@
         methods:{
             sourceChanged(e){
                 console.log("Source changed method called here");
-                for(let i = 0 ; i <= this.sources.length; i++){
+                for(let i = 0 ; i < this.sources.length; i++){
                     if(this.sources[i].id == e.target.value){
                         this.source == this.sources[i];
+                        console.log("here")
                     }
                 }
             }
@@ -37,5 +45,9 @@
 </script>
 
 <style type = "scss">
-
+.panel{
+    background-color: #ddd;
+    padding: 20px 20px;
+    border-radius: 5px;
+}
 </style>

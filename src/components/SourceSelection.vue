@@ -14,6 +14,8 @@
     </div>
 </template>
 <script>
+    import {mapState} from 'vuex'
+    import newsSourcesStore from '../global/newsSourcesStore'
     export default {
         name: 'source-selection',
         data() {
@@ -33,13 +35,19 @@
                 }
             }
         },
+        computed: mapState({
+            newsSourcesStore:state => state.newsSourcesStore
+        }),
         created(){
-            console.log("Source selection created, api called here");
-            this.$http.get('https://newsapi.org/v1/sources?language=en')
-                .then(response => {
-                    this.sources = response.data.sources;
-                })
+            this.$store.dispatch('setSourcesList')
         }
+//        created(){
+//            console.log("Source selection created, api called here");
+//            this.$http.get('https://newsapi.org/v1/sources?language=en')
+//                .then(response => {
+//                    this.sources = response.data.sources;
+//                })
+//        }
     }
 
 </script>

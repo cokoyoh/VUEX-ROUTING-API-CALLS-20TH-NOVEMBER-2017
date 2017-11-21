@@ -3,13 +3,13 @@
         <div class="panel">
             <h2>News List</h2>
             <h4>Source News Source</h4>
-            <select v-on:change="sourceChanged" class="form-control">
-                <option v-bind:value="source.id" v-for="source in sources">{{source.name}}</option>
+            <select @change="sourceChanged(source)" class="form-control">
+                <option v-bind:value="source.id"  v-for="source in newsSourcesStore.sources">{{source.name}}</option>
             </select>
-            <div  v-if="source">
-                <h6>{{source.description}}</h6>
-                <a v-bind:href = "source.url" target="_blank" class="button primary">Go to {{source.name}} website</a>
-            </div>
+            <!--<div  v-if="source">-->
+                <!--<h6>{{source.description}}</h6>-->
+                <!--<a v-bind:href = "source.url" target="_blank" class="button primary">Go to {{source.name}} website</a>-->
+            <!--</div>-->
         </div>
     </div>
 </template>
@@ -20,19 +20,14 @@
         name: 'source-selection',
         data() {
             return {
-                sources: [],
-                source: ''
+//                sources: [],
+//                source: ''
             }
         },
         methods:{
-            sourceChanged(e){
+            sourceChanged(source){
                 console.log("Source changed method called here");
-                for(let i = 0 ; i < this.sources.length; i++){
-                    if(this.sources[i].id == e.target.value){
-                        this.source == this.sources[i];
-                        console.log("here")
-                    }
-                }
+                this.$store.dispatch('setCurrentSource',source)
             }
         },
         computed: mapState({

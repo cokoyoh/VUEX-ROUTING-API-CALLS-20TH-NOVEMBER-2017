@@ -3,7 +3,7 @@
          <div class="grid-container row">
              <div class="grid-x grid-padding-x">
                  <source-selection @sourceChanged="sourceChanged"></source-selection>
-                 <news-list v-bind:source="source"></news-list>
+                 <!--<news-list v-bind:source="source"></news-list>-->
              </div>
          </div>
     </div>

@@ -3,13 +3,14 @@
         <div class="panel">
             <h2>News List</h2>
             <h4>Source News Source</h4>
-            <select @change="sourceChanged(source)" class="form-control">
+            <select v-model="selected" @change="sourceChanged()" class="form-control">
+                <option value = "">News Sources</option>
                 <option v-bind:value="source.id"  v-for="source in newsSourcesStore.sources">{{source.name}}</option>
             </select>
-            <!--<div  v-if="source">-->
-                <!--<h6>{{source.description}}</h6>-->
-                <!--<a v-bind:href = "source.url" target="_blank" class="button primary">Go to {{source.name}} website</a>-->
-            <!--</div>-->
+            <div  v-if="source" >
+                <h6>{{source.description}}</h6>
+                <a v-bind:href = "source.url" target="_blank" class="button primary">Go to {{source.name}} website</a>
+            </div>
         </div>
     </div>
 </template>
@@ -21,28 +22,27 @@
         data() {
             return {
 //                sources: [],
-//                source: ''
+                source: '',
+                selected: ''
             }
         },
         methods:{
-            sourceChanged(source){
-                console.log("Source changed method called here");
-                this.$store.dispatch('setCurrentSource',source)
+            sourceChanged(){
+                this.$store.dispatch('setCurrentSource', this.selected);
+                console.log("Selected source - ",this.selected);
+
+                for(let i = 0 ; i < this.newsSourcesStore.sources.length; i++){
+                    this.source = this.newsSourcesStore.sources[i];
+                }
             }
         },
         computed: mapState({
             newsSourcesStore:state => state.newsSourcesStore
         }),
         created(){
-            this.$store.dispatch('setSourcesList')
+            this.$store.dispatch('setSourcesList');
         }
-//        created(){
-//            console.log("Source selection created, api called here");
-//            this.$http.get('https://newsapi.org/v1/sources?language=en')
-//                .then(response => {
-//                    this.sources = response.data.sources;
-//                })
-//        }
+
     }
 
 </script>
